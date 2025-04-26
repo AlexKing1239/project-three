@@ -1,0 +1,56 @@
+struct Student {
+    string firstName;
+    string lastName;
+    string studentID;
+    int numTests;
+    float* testScores;
+};
+
+void addStudent() {
+    Student s;
+
+
+    cout << "Enter first name: ";
+    cin >> s.firstName;
+
+    cout << "Enter last name: ";
+    cin >> s.lastName;
+
+    cout << "Enter student ID: ";
+    cin >> s.studentID;
+
+    cout << "Enter number of tests taken: ";
+    cin >> s.numTests;
+
+
+    s.testScores = new float[s.numTests];
+
+
+    for (int i = 0; i < s.numTests; ++i) {
+        cout << "Enter score for test: " << (i + 1) << ": ";
+        cin >> s.testScores[i];
+    }
+
+
+    ofstream outFile("student.dat", ios::app);
+    if (!outFile) {
+        cerr << "Error: cant open file!" << endl;
+        return;
+    }
+
+
+    outFile << s.firstName << " " << s.lastName << " " << s.studentID << " "
+            << s.numTests;
+
+    for (int i = 0; i < s.numTests; ++i) {
+        outFile << " " << s.testScores[i];
+    }
+    outFile << endl;
+
+
+    delete[] s.testScores;
+    outFile.close();
+
+    cout << "Student data saved successfully!" << endl;
+
+}
